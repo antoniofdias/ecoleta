@@ -67,6 +67,14 @@ const Home = () => {
     });
   }
 
+  function setPlaceholder(field: string) {
+    return ({
+      label: `Selecione uma ${field}.`,
+      value: null,
+      color: '#9EA0A4',
+    });
+  }
+
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined }>
       <ImageBackground
@@ -101,14 +109,48 @@ const Home = () => {
           /> */}
 
           <RNPickerSelect
+            placeholder={{
+              label: 'Selecione o Estado',
+              value: null,
+              color: '#9EA0A4',
+            }}
             onValueChange={(value) => handleSelectUf(value)}
             items={ufs}
+            style={{
+              ...pickerSelectStyles,
+              iconContainer: {
+                top: 10,
+                right: 12,
+              },
+            }}
+            useNativeAndroidPickerStyle={false}
+            Icon={() => {
+              return <Icon name="chevron-down" color="gray" size={24} />;
+            }}
           />
 
-          <RNPickerSelect
-            onValueChange={(value) => handleSelectCity(value)}
-            items={cities}
-          />
+          <View style={styles.pickerContainer}>
+            <RNPickerSelect
+              placeholder={{
+                label: 'Selecione a Cidade',
+                value: null,
+                color: '#9EA0A4',
+              }}
+              onValueChange={(value) => handleSelectCity(value)}
+              items={cities}
+              style={{
+                ...pickerSelectStyles,
+                iconContainer: {
+                  top: 10,
+                  right: 12,
+                },
+              }}
+              useNativeAndroidPickerStyle={false}
+              Icon={() => {
+                return <Icon name="chevron-down" color="gray" size={24} />;
+              }}
+            />
+          </View>
 
           <RectButton style={styles.button} onPress={handleNavigateToPoints}>
             <View style={styles.buttonIcon}>
@@ -126,6 +168,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 32,
+  },
+
+  pickerContainer: {
+    marginTop: 8,
   },
 
   main: {
@@ -189,6 +235,30 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto_500Medium',
     fontSize: 16,
   }
+});
+
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    fontSize: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 4,
+    color: 'black',
+    paddingRight: 30, // to ensure the text is never behind the icon
+  },
+  inputAndroid: {
+    backgroundColor: 'white',
+    fontSize: 16,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderWidth: 0.5,
+    borderColor: 'white',
+    borderRadius: 8,
+    color: 'black',
+    paddingRight: 30, // to ensure the text is never behind the icon
+  },
 });
 
 export default Home;
